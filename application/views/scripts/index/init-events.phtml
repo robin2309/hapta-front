@@ -1,0 +1,53 @@
+<div  id="contentText">
+<?php
+$date = "";
+$nbEvents = "";
+$idEvent = 0;
+
+foreach ($this->upcomingEvents as $event): ?>
+
+	<?php if($date != $this->escape($event->getDate())): 
+		$date = $this->escape($event->getDate());
+		$idEvent = 1;
+	?>
+		<?php echo $this->partial("index/displayEventTxt.phtml", array('event'=>$event, 'date'=>$date, 'idEvent'=>$idEvent, 'displayDate' => true, 'nbEventsByDate' => $this->nbEventsByDate, 'displayNumByDate' => true)) ?>
+
+	<?php 
+		else: 
+		$idEvent++;
+		echo $this->partial("index/displayEventTxt.phtml", array('event'=>$event, 'date'=>$date, 'idEvent'=>$idEvent, 'displayDate' => false, 'nbEventsByDate' => $this->nbEventsByDate, 'displayNumByDate' => true));
+		endif;
+	?>
+
+<?php endforeach; ?>
+
+</div>
+
+<div id="contentBanner" style="margin-top: 15px;display:none;   ">
+<?php
+//*****************
+//EVENTS AVEC IMG
+//*****************
+
+foreach ($this->upcomingEvents as $event): ?>
+	
+	<?php echo $this->partial("index/displayEventImg.phtml", array('event'=>$event)); ?>
+		
+<?php endforeach; ?>
+
+</div>
+
+<div id="moinsEvent">Il n'y a plus d'event</div>
+<div id="loader">
+	<img id="loadingMore" src="/img/ajax-loader.gif"/>
+</div>
+<div style="text-align:center; margin-bottom: 20px;" id="marginBot">
+	<input type="button" id="morevent" onclick="getMoreEvent()" value="CHARGER PLUS D'EVENT">
+</div>
+
+<script>
+$(document).ready(function() {
+	$('#loadingMore').hide();
+	$('#moinsEvent').hide();
+});
+</script>

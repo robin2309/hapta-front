@@ -1,0 +1,121 @@
+			<h1 class="slogan">Trouve le caisson qui te correspond !</h1>
+	
+			</div>
+			
+			
+			<input type="checkbox" checked data-toggle="toggle" data-onstyle="default" data-on="<i class='fa fa-file-text-o'></i> Mode Complet" data-off="<i class='fa fa-file-image-o'></i> Mode Flyer" data-offstyle="default" data-style="android" data-width="200" data-height="50" >
+		
+		<br><br>
+		</div>
+	</div>
+
+<div id="fb-root"></div>
+
+<div class="contenu" id="content">
+
+<?php echo $this->partial("index/init-events.phtml", array('upcomingEvents' => $this->upcomingEvents, 'nbEventsByDate' => $this->nbEventsByDate)) ?>
+
+</div><!-- content -->
+
+<br />
+<div style="text-align:center; margin-bottom: 20px;" id="marginBot">
+	<?php echo $this->partial("facebookFrame.phtml") ?>
+</div>
+
+<a href="#0" class="cd-top">Top</a>
+
+<?php
+if(!isset($_COOKIE['eucookie']))
+{ ?>
+	<div id="eucookielaw">
+		<div class="textCookie">	
+			Ce site utilise des cookies pour vous assurer d'obtenir la meilleure expérience sur notre site.
+		</div>
+		<div class="floatRight">
+			<a id="removecookie">Ok</a>
+			<a onclick="trackOutboundLink('Accès page cookies');" href="http://haptalyon.fr/cookies" id="more">En savoir plus</a>
+		</div>
+	</div>
+<?php } ?>
+
+<script type="text/javascript" >
+var load = false;
+var offset = $('.itemtest:last').offset(); 
+
+$(document).ready(function() {
+	$('#loadingMore').hide();
+	$('#moinsEvent').hide();
+});
+
+function getMoreEvent(){
+	load = true;
+
+	//On récupère l'id du dernier commentaire affiché
+	var last_id = $('.itemtest:last').attr('id');
+	
+	//recuperation des events complet
+	$.ajax({
+		url: 'index/moreEvents',
+		type: 'get',
+		data: 'last='+last_id,
+
+		beforeSend: function(){
+			$('#loadingMore').show();
+		},
+		
+		error: function(a,b,c){
+			console.log(b);
+		},
+		
+		//Succès de la requête
+		success: function(data) {
+			if(data === 0)
+			{
+				$('#loadingMore').hide();
+				$('#moinsEvent').show();
+				$('#morevent').hide();
+			}
+			$('#loadingMore').hide();
+			//On masque le loader
+			$('.loadmore').fadeOut(500);
+			// On affiche le résultat après le dernier commentaire
+			$('.itemtest:last').after(data);
+			// On actualise la valeur offset du dernier commentaire 
+			offset = $('.itemtest:last').offset();
+			//On remet la valeur à faux car c'est fini
+			load = false;
+			$(function () {$('[data-toggle="tooltip"]').tooltip()});
+		}
+	});
+	
+	//recuperation des events flyer
+	$.ajax({
+		url: 'index/moreEventsFlyer',
+		type: 'get',
+		data: 'last='+last_id,
+
+		beforeSend: function(){
+			$('#loadingMore').show();
+		},
+		//Succès de la requête
+		success: function(data) {
+			if(data == 0)
+			{	
+				$('#loadingMore').hide();
+				$('#moinsEvent').show();
+				$('#morevent').hide();
+			}
+
+			$('#loadingMore').hide();
+			//On masque le loader
+			$('.loadmore').fadeOut(500);
+			// On affiche le résultat après le dernier commentaire
+			$('.itembanner:last').after(data);
+			// On actualise la valeur offset du dernier commentaire 
+			offset = $('.itembanner:last').offset();
+			//On remet la valeur à faux car c'est fini
+			load = false;
+		}
+	});
+}
+</script>

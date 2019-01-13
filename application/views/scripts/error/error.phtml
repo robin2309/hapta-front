@@ -1,0 +1,104 @@
+<style>
+@font-face {
+  font-family:'Ubuntu';
+  font-style:normal;
+  font-weight:700;
+  src:local('Ubuntu Bold'), local('Ubuntu-Bold'), url('http://themes.googleusercontent.com/static/fonts/ubuntu/v4/0ihfXUL2emPh0ROJezvraD8E0i7KZn-EPnyo3HZu7kw.woff') format('woff');
+}
+
+html, body {
+  padding:0; margin:0;
+  height:100%; width:100%;
+}
+body {
+  font-family:"Calibri",sans-serif;
+}
+
+#notfound {
+  margin:0 auto;
+}
+#notfound svg {
+  -webkit-animation: noise 2s linear infinite;
+  animation: noise 2s linear infinite;
+}
+@-webkit-keyframes noise {
+  0%, 3%, 5%, 42%, 44%, 100% { -webkit-transform: scaleY(1); }  
+  4.3% { -webkit-transform: scaleY(1.7); }
+  43% { -webkit-transform: scaleX(1.5); }
+}
+@keyframes noise {
+  0%, 3%, 5%, 42%, 44%, 100% { transform: scaleY(1); }  
+  4.3% { transform: scaleY(1.7); }
+  43% { transform: scaleX(1.5); }
+}
+
+p {
+  text-align:center;
+}
+p.small {
+  font-size:0.8em;
+  opacity:0.5;
+}
+
+@media screen and (min-width: 200px) and (max-width: 640px) {
+	#notfound {
+		width: 100%!important;
+	}
+	#SvgjsSvg1000 {
+		width: 100%;
+	}
+}
+
+@media screen and (min-width: 640px) and (max-width: 764px) {
+	#notfound {
+		width: 100%!important;
+	}
+	#SvgjsSvg1000 {
+		width: 100%;
+	}
+}
+
+@media screen and (min-width: 700px) and (max-width: 1024px) {
+	#notfound {
+		width: 100%!important;
+	}
+	#SvgjsSvg1000 {
+		width: 100%;
+	}
+}
+
+</style>
+
+<div class="header margintop10"></div>
+<div id="notfound"></div>
+
+<p class="aligncenter"><a class="btn" id ="morevent" href="/">Retour au site</a></p>
+<script src='http://cdnjs.cloudflare.com/ajax/libs/svg.js/1.0.0-rc.8/svg.min.js'></script>
+<script src='http://strangeplanet.fr/files/misc/perlin-noise-simplex.js'></script>
+<script src="http://haptalyon.fr/js/404.js"></script>
+
+
+	
+	
+
+  
+  <h1>An error occurred</h1>
+  <h2><?php echo $this->message ?></h2>
+  <h2><?php echo $this->type ?></h2>
+
+  <?php if (isset($this->exception)): ?>
+  
+  <h3>Exception information:</h3>
+  <p>
+      <b>Message:</b> <?php echo $this->exception->getMessage() ?>
+  </p>
+
+  <h3>Stack trace:</h3>
+  <pre><?php echo $this->exception->getTraceAsString() ?>
+  </pre>
+
+  <h3>Request Parameters:</h3>
+  <pre><?php echo $this->escape(var_export($this->request->getParams(), true)) ?>
+  </pre>
+
+  <?php endif ?>

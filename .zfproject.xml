@@ -1,0 +1,201 @@
+<?xml version="1.0"?>
+<projectProfile type="default" version="1.12.11">
+  <projectDirectory>
+    <projectProfileFile filesystemName=".zfproject.xml"/>
+    <applicationDirectory classNamePrefix="Application_">
+      <configsDirectory>
+        <applicationConfigFile type="ini"/>
+      </configsDirectory>
+      <controllersDirectory>
+        <controllerFile controllerName="Index">
+          <actionMethod actionName="index"/>
+          <actionMethod actionName="moreEvents"/>
+          <actionMethod actionName="searchEvents"/>
+          <actionMethod actionName="initEvents"/>
+          <actionMethod actionName="searchEventsDate"/>
+          <actionMethod actionName="moreEventsFlyer"/>
+          <actionMethod actionName="searchEventsArtist"/>
+        </controllerFile>
+        <controllerFile controllerName="Error"/>
+        <controllerFile controllerName="Concours">
+          <actionMethod actionName="index"/>
+          <actionMethod actionName="detail"/>
+          <actionMethod actionName="list"/>
+        </controllerFile>
+        <controllerFile controllerName="Stats">
+          <actionMethod actionName="index"/>
+        </controllerFile>
+        <controllerFile controllerName="Prefs">
+          <actionMethod actionName="index"/>
+        </controllerFile>
+        <controllerFile controllerName="Cookies">
+          <actionMethod actionName="index"/>
+        </controllerFile>
+        <controllerFile controllerName="Social">
+          <actionMethod actionName="index"/>
+          <actionMethod actionName="loadMorePictureInstagram"/>
+        </controllerFile>
+        <controllerFile controllerName="Contact">
+          <actionMethod actionName="index"/>
+          <actionMethod actionName="admin"/>
+        </controllerFile>
+        <controllerFile controllerName="Events">
+          <actionMethod actionName="index"/>
+          <actionMethod actionName="list"/>
+          <actionMethod actionName="more"/>
+          <actionMethod actionName="detail"/>
+        </controllerFile>
+        <controllerFile controllerName="Partner">
+          <actionMethod actionName="index"/>
+        </controllerFile>
+        <controllerFile controllerName="Sitemap">
+          <actionMethod actionName="index"/>
+        </controllerFile>
+      </controllersDirectory>
+      <formsDirectory enabled="false"/>
+      <layoutsDirectory>
+        <layoutScriptsDirectory>
+          <layoutScriptFile layoutName="layout"/>
+        </layoutScriptsDirectory>
+      </layoutsDirectory>
+      <modelsDirectory>
+        <modelFile modelName="Event"/>
+        <modelFile modelName="Spot"/>
+        <modelFile modelName="Genre"/>
+        <dbTableDirectory>
+          <dbTableFile dbTableName="Event"/>
+          <dbTableFile dbTableName="Spot"/>
+          <dbTableFile dbTableName="Genre"/>
+          <dbTableFile dbTableName="Artist"/>
+          <dbTableFile dbTableName="Concours"/>
+          <dbTableFile dbTableName="ArtistEvent"/>
+          <dbTableFile dbTableName="GenreEvent"/>
+          <dbTableFile dbTableName="PriceEvent"/>
+          <dbTableFile dbTableName="TypePrice"/>
+          <dbTableFile dbTableName="User"/>
+        </dbTableDirectory>
+        <modelFile modelName="Artist"/>
+        <modelFile modelName="Concours"/>
+        <modelFile modelName="ArtistEvent"/>
+        <modelFile modelName="GenreEvent"/>
+        <modelFile modelName="PriceEvent"/>
+        <modelFile modelName="TypePrice"/>
+        <modelFile modelName="User"/>
+      </modelsDirectory>
+      <modulesDirectory enabled="false"/>
+      <servicesDirectory enabled="false"/>
+      <viewsDirectory>
+        <viewScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="Index">
+            <viewScriptFile forActionName="index"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="Error">
+            <viewScriptFile forActionName="error"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="Index">
+            <viewScriptFile forActionName="moreEvents"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="Index">
+            <viewScriptFile forActionName="searchEvents"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="Index">
+            <viewScriptFile forActionName="initEvents"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="Index">
+            <viewScriptFile forActionName="searchEventsDate"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="Concours">
+            <viewScriptFile forActionName="index"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="Concours">
+            <viewScriptFile forActionName="detail"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="Index">
+            <viewScriptFile forActionName="moreEventsFlyer"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="Stats">
+            <viewScriptFile forActionName="index"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="Prefs">
+            <viewScriptFile forActionName="index"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="Index">
+            <viewScriptFile forActionName="searchEventsArtist"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="Cookies">
+            <viewScriptFile forActionName="index"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="Social">
+            <viewScriptFile forActionName="index"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="Social">
+            <viewScriptFile forActionName="loadMorePictureInstagram"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="Contact">
+            <viewScriptFile forActionName="index"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="Events">
+            <viewScriptFile forActionName="index"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="Events">
+            <viewScriptFile forActionName="list"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="Events">
+            <viewScriptFile forActionName="more"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="Concours">
+            <viewScriptFile forActionName="list"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="Partner">
+            <viewScriptFile forActionName="index"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="Events">
+            <viewScriptFile forActionName="detail"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="Sitemap">
+            <viewScriptFile forActionName="index"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="Contact">
+            <viewScriptFile forActionName="admin"/>
+          </viewControllerScriptsDirectory>
+        </viewScriptsDirectory>
+        <viewHelpersDirectory/>
+        <viewFiltersDirectory enabled="false"/>
+      </viewsDirectory>
+      <bootstrapFile filesystemName="Bootstrap.php"/>
+    </applicationDirectory>
+    <dataDirectory enabled="false">
+      <cacheDirectory enabled="false"/>
+      <searchIndexesDirectory enabled="false"/>
+      <localesDirectory enabled="false"/>
+      <logsDirectory enabled="false"/>
+      <sessionsDirectory enabled="false"/>
+      <uploadsDirectory enabled="false"/>
+    </dataDirectory>
+    <docsDirectory>
+      <file filesystemName="README.txt"/>
+    </docsDirectory>
+    <libraryDirectory>
+      <zfStandardLibraryDirectory enabled="false"/>
+    </libraryDirectory>
+    <publicDirectory>
+      <publicStylesheetsDirectory enabled="false"/>
+      <publicScriptsDirectory enabled="false"/>
+      <publicImagesDirectory enabled="false"/>
+      <publicIndexFile filesystemName="index.php"/>
+      <htaccessFile filesystemName=".htaccess"/>
+    </publicDirectory>
+    <projectProvidersDirectory enabled="false"/>
+    <temporaryDirectory enabled="false"/>
+    <testsDirectory>
+      <testPHPUnitConfigFile filesystemName="phpunit.xml"/>
+      <testPHPUnitBootstrapFile filesystemName="bootstrap.php"/>
+      <testApplicationDirectory>
+        <testApplicationControllerDirectory>
+          <testApplicationControllerFile forControllerName="Index"/>
+        </testApplicationControllerDirectory>
+      </testApplicationDirectory>
+      <testLibraryDirectory/>
+    </testsDirectory>
+  </projectDirectory>
+</projectProfile>

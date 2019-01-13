@@ -1,0 +1,97 @@
+			<p class="slogan"><b>Tes paramètres !</b></p>
+		</div>
+	</div>
+</div>
+
+<div class="contenu responsive" id="content">
+	
+	<div class="prefs" style="padding-top:30px;">
+
+		<div class="alert alert-success eligibleJeuxConcours" role="alert" style="margin-left:15%; margin-right:15%; margin-bottom:0px;">Tu es <b>éligible</b> au <b>tirage</b> des jeux concours.</div>
+
+		<div class="alert alert-danger pasEligibleJeuxConcours" role="alert" style="margin-left:15%; margin-right:15%; margin-bottom:0px;">Tu n'es <b>pas éligible</b> au <b>tirage</b> des jeux concours. Merci de completer les informations ci-dessous</div>
+
+		<?php if($this->loggedIn): ?>
+
+		<form id="editUserInfo" enctype="application/x-www-form-urlencoded" method="post" action="/prefs" onsubmit="return verifPrefs(this)" class="form-horizontal" >
+
+			<div class="form-group fb" id="facebook">
+			</div>
+		
+			<div class="form-group mail" id="mail">
+			</div>
+			
+			<div class="form-group prenom" id="prenom">
+			</div>
+			
+			<div class="form-group nom" id="nom">
+			</div>
+			
+			<div>
+				<input type="submit" name="submit" id="submitbutton" value="Valider" class="btn btn-primary"  />
+			</div>
+		
+		</form>
+
+	<?php else: ?>
+
+		<div class="alert alert-info" role="alert" style="margin-left:15px; margin-right:15px;">Connecte-toi avec <strong>Facebook</strong> pour pouvoir entrer tes informations personnelles.</div>
+		<button class="btn btn_default" id="morevent">Connecte-toi avec Facebook</button>
+
+	<?php endif; ?>
+	</div>
+</div>
+
+<script>
+	$(".eligibleJeuxConcours").hide();
+	$(".pasEligibleJeuxConcours").hide();
+	
+	$(window).load(function(){
+		
+		var mail = document.getElementById("email").value;
+		var prenom = document.getElementById("firstName").value;
+		var nom = document.getElementById("familyName").value;
+
+		if(mail != "" && prenom != "" && nom != "") {
+			$(".eligibleJeuxConcours").show();
+			$(".pasEligibleJeuxConcours").hide();
+		}
+		else {
+			$(".eligibleJeuxConcours").hide();
+			$(".pasEligibleJeuxConcours").show();
+		}
+	});
+	
+	// PREFS
+	function mediaqueryresponse(mql){
+	 if (mql.matches)
+	 {
+	  $('.form-group.fb').html('<label for="fullName" class="control-label required">Nom Facebook <i class="fa fa-info-circle"></i></label><div ><input type="text" class="form-control" id="fullName" name="fullName"  placeholder="Nom Facebook" value="<?php if(isset($this->dataPopulate['fullName'])) echo $this->dataPopulate['fullName']; ?>" readonly/></div><div class="alert alert-warning" role="alert">Nous avons besoin de ton <b>pseudo facebook</b> pour le tirage au sort.</div>');
+
+	  $('.form-group.mail').html('<label for="email" class="control-label required">Email <i class="fa fa-info-circle"></i></label><div ><input type="text" class="form-control email" id="email" name="email"  placeholder="Email" value="<?php if(isset($this->dataPopulate['email'])) echo $this->dataPopulate['email']; ?>" required pattern="[a-z0-9]+([_|\.|-]{1}[a-z0-9]+)*@[a-z0-9]+([_|\.|-]{1}[a-z0-9]+)*[\.]{1}[a-z]{2,6}$" onblur=""/><span class="form_hint">Certains charactères spéciaux ne sont pas acceptés.</span></div><div class="alert alert-warning" role="alert">Nous avons besoin de ton <b>mail</b> pour te prévenir en cas de gain !</div>');
+
+	  $('.form-group.prenom').html('<label for="firstName" class="control-label required">Prénom <i class="fa fa-info-circle"></i></label><div ><input type="text" class="form-control firstName" id="firstName" name="firstName"  placeholder="Prenom" value="<?php if(isset($this->dataPopulate['firstName'])) echo $this->dataPopulate['firstName']; ?>" required pattern="^[a-zA-Z àèìòùÀÈÌÒÙáéíóúýÁÉÍÓÚÝâêîôûÂÊÎÔÛãñõÃÑÕäëïöüÿÄËÏÖÜŸçÇßØøÅåÆæœ]*$" onblur="upperCaseFirstName(this.value)"/><span class="form_hint">Certains charactères spéciaux ne sont pas acceptés.</span></div><div class="alert alert-warning" role="alert">Nous avons besoin de ton <b>nom et prénom</b> pour les inscrire sur la liste de la soirée.</div>');
+
+	  $('.form-group.nom').html('<label for="familyName" class="control-label required">Nom <i class="fa fa-info-circle"></i></label><div><input type="text" class="form-control familyName" id="familyName" name="familyName" placeholder="Nom" value="<?php if(isset($this->dataPopulate['familyName'])) echo $this->dataPopulate['familyName']; ?>" required pattern="^[a-zA-Z àèìòùÀÈÌÒÙáéíóúýÁÉÍÓÚÝâêîôûÂÊÎÔÛãñõÃÑÕäëïöüÿÄËÏÖÜŸçÇßØøÅåÆæœ]*$" onblur="upperCaseFamilyName(this.value)"/><span class="form_hint">Certains charactères spéciaux ne sont pas acceptés.</span></div><div class="alert alert-warning" role="alert">Nous avons besoin de ton <b>nom et prénom</b> pour les inscrire sur la liste de la soirée.</div>');
+
+		$(function () {$('[data-toggle="tooltip"]').tooltip()});
+
+	 }
+	 else{
+	 $(".form-group.fb").html('<label for="fullName" class="control-label required" data-toggle="tooltip" data-html="true" data-placement="right" title=\'<div class="alert alert-warning" role="alert">Nous avons besoin de ton <b>pseudo facebook</b> pour le tirage au sort.</div>\'>Nom Facebook <i class="fa fa-info-circle"></i></label><div ><input type="text" class="form-control" id="fullName" name="fullName" placeholder="Nom Facebook" value="<?php if(isset($this->dataPopulate['fullName'])) echo $this->dataPopulate['fullName']; ?>" readonly/></div>');
+	  
+	  $('.form-group.mail').html('<label for="email" class="control-label required" data-toggle="tooltip" data-html="true" data-placement="right" title=\'<div class="alert alert-warning" role="alert">Nous avons besoin de ton <b>mail</b> pour te prévenir en cas de <b>gain</b> !</div>\'>Email <i class="fa fa-info-circle"></i></label><div ><input type="text" class="form-control email" id="email" name="email" placeholder="Email" value="<?php if(isset($this->dataPopulate['email'])) echo $this->dataPopulate['email']; ?>" required pattern="[a-z0-9]+([_|\.|-]{1}[a-z0-9]+)*@[a-z0-9]+([_|\.|-]{1}[a-z0-9]+)*[\.]{1}[a-z]{2,6}$" onblur=""/><span class="form_hint">Certains charactères spéciaux ne sont pas acceptés.</span></div>');
+	  
+	  $('.form-group.prenom').html('<label for="firstName" class="control-label required" data-toggle="tooltip" data-html="true" data-placement="right" title=\'<div class="alert alert-warning" role="alert">Nous avons besoin de ton <b>nom et prénom</b> pour les inscrire sur la <b>liste</b> de la soirée.</div>\'>Prénom <i class="fa fa-info-circle"></i></label><div ><input type="text" class="form-control firstName" id="firstName" name="firstName" placeholder="Prenom" value="<?php if(isset($this->dataPopulate['firstName'])) echo $this->dataPopulate['firstName']; ?>" required pattern="^[a-zA-Z àèìòùÀÈÌÒÙáéíóúýÁÉÍÓÚÝâêîôûÂÊÎÔÛãñõÃÑÕäëïöüÿÄËÏÖÜŸçÇßØøÅåÆæœ]*$" onblur="upperCaseFirstName(this.value)"/><span class="form_hint">Certains charactères spéciaux ne sont pas acceptés.</span></div>');
+
+	  $('.form-group.nom').html('<label for="familyName" class="control-label required" data-toggle="tooltip" data-html="true" data-placement="right" title=\'<div class="alert alert-warning" role="alert">Nous avons besoin de ton <b>nom et prénom</b> pour les inscrire sur la <b>liste</b> de la soirée.</div>\'>Nom <i class="fa fa-info-circle"></i></label><div ><input type="text" class="form-control familyName" id="familyName" name="familyName" placeholder="Nom" value="<?php if(isset($this->dataPopulate['familyName'])) echo $this->dataPopulate['familyName']; ?>" required pattern="^[a-zA-Z àèìòùÀÈÌÒÙáéíóúýÁÉÍÓÚÝâêîôûÂÊÎÔÛãñõÃÑÕäëïöüÿÄËÏÖÜŸçÇßØøÅåÆæœ]*$" onblur="upperCaseFamilyName(this.value)"/><span class="form_hint">Certains charactères spéciaux ne sont pas acceptés.</span></div>');
+
+		$(function () {$('[data-toggle="tooltip"]').tooltip()});
+	 }
+	}
+
+	var mql = window.matchMedia("(max-width: 1024px)");
+	mediaqueryresponse(mql);
+	mql.addListener(mediaqueryresponse);
+	// PREFS
+</script>

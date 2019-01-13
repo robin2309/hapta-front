@@ -1,0 +1,21 @@
+<?php
+$date = "";
+$nbEvents = "";
+$idEvent = 0;
+
+foreach ($this->upcomingEvents as $event): ?>
+	
+	<?php if($date != $this->escape($event->getDate())): 
+		$date = $this->escape($event->getDate());
+		$idEvent = 1;
+	?>
+		<?php echo $this->partial("index/displayEventTxt.phtml", array('event'=>$event, 'date'=>$date, 'idEvent'=>$idEvent, 'displayDate' => true, 'nbEventsByDate' => $this->nbEventsByDate, 'displayNumByDate' => true)) ?>
+	
+	<?php 
+		else: 
+		$idEvent++;
+		echo $this->partial("index/displayEventTxt.phtml", array('event'=>$event, 'date'=>$date, 'idEvent'=>$idEvent, 'displayDate' => false, 'nbEventsByDate' => $this->nbEventsByDate, 'displayNumByDate' => false));
+		endif;
+	?>
+		
+<?php endforeach; ?>

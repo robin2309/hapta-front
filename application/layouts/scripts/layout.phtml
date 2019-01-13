@@ -1,0 +1,309 @@
+<?php 
+echo $this->doctype();
+$city = Zend_Registry::get('City_Location');
+$homeTitle = Zend_Registry::get('Home_Title');
+$siteAddress = Zend_Registry::get('Site_Address');
+$adjective = Zend_Registry::get('Adjective');
+$api_GA = Zend_Registry::get('Api_GA');
+$idApiFb = Zend_Registry::get('Fb_Id_App');
+?>
+
+<html lang="fr">
+  	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8;" />
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>
+			<?php if(isset($this->headTitle)):
+			 echo $this->headTitle; 
+			 else:?>
+			 Hapta <?php echo $city ?> - <?php echo $homeTitle ?>
+			 <?php endif; ?>
+		</title>
+		<meta name="description" content="Toutes les soirées éléctroniques <?php echo $adjective ?> en 1 clic : Techno, Trance, Dub, Deep, Rap, Reggae. Trouve rapidement ta soirée de ce soir !"/>
+		<meta name="keywords" content="hapta, rapta, <?php echo strtolower($city) ?>, soirée <?php echo strtolower($city) ?>, trance, dub, techno, electro, rap, reggae, hapta <?php echo strtolower($city) ?>, soirée ce soir" />
+		
+		<meta property="og:title" content="<?php if(isset($this->headTitle)):
+			 echo $this->headTitle; 
+			 else:?>
+			 Hapta <?php echo $city ?> - <?php echo $homeTitle ?>
+			 <?php endif; ?>" />
+		<meta property="og:image" content="http://<?php echo $siteAddress ?>/img/logo-fb-hapta.jpg" />
+		<meta property="og:description" content="Retrouve toutes les soirées éléctroniques <?php echo $adjective ?> en 1 clic : Techno, Trance, Dub, Deep, Rap, Reggae. Trouve rapidement ta soirée de ce soir !" />
+		<meta property="og:url" content="http://<?php echo $siteAddress ?>" />
+		
+		<link rel="icon" href="/img/favicon6.png" />
+		<link href='http://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'>
+		<link href='http://fonts.googleapis.com/css?family=Cinzel' rel='stylesheet' type='text/css'>
+		
+		<? $this->headLink()->appendStylesheet('/css/font-awesome/css/font-awesome.min.css')
+							->appendStylesheet('/css/style_1.css')
+							->appendStylesheet('/css/bootstrap.min.css')
+							->appendStylesheet('/css/bootstrap-toggle.min.css')  ?>
+							
+		<? echo $this->headLink() ?>
+
+		
+		<!-- SCRIPTS EN INLINE + COMPRESSION + METTRE EN CACHE-->
+		<script type="text/javascript" 
+			src="/js/jquery-1.11.2.min.js">
+		</script>
+		
+	<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', '<?php echo $api_GA ?>', 'auto');
+  ga('send', 'pageview');
+  
+var trackOutboundLink = function(name) {
+   ga('send', 'event', 'outbound', 'click', name, {'hitCallback':
+     function () {
+	//console.log(name);
+     }
+   });
+}
+
+var trackViewEvent = function(name) {
+   ga('send', 'event', 'reach', 'view', name, {'hitCallback':
+     function () {
+	//console.log(name);
+     }
+   });
+
+}
+
+
+</script>
+</head>
+
+<div id="container">
+
+<?php
+require_once('navbar.php');
+echo $this->layout()->content;
+?>
+<p hidden id="idFacebookAppForScript"><?php echo $idApiFb ?></p>
+
+</div>
+<?php 
+$request = Zend_Controller_Front::getInstance()->getRequest();
+$controller = $request->getControllerName();
+if($controller != "partner") require_once('footer.php'); ?>
+</div>
+
+
+<?php 
+	$this->headScript()->appendFile('/js/bootstrap.min.js');
+	$this->headScript()->appendFile('/js/bootstrap-toggle.min.js');
+	$this->headScript()->appendFile('/js/gestionFb_1.js');
+	$this->headScript()->appendFile('/js/backToTop.js');
+	$this->headScript()->appendFile('/js/validateForm.js');
+	echo $this->headScript();
+?>
+
+<script type="text/javascript" >
+
+	// COOKIE 
+	<?php
+		if(!isset($_COOKIE['eucookie']))
+		{ ?>
+			function SetCookie(c_name,value,expiredays)
+			{
+				var exdate = new Date()
+				exdate.setDate(exdate.getDate()+expiredays)
+				document.cookie = c_name+ "=" +escape(value)+";path=/"+((expiredays==null) ? "" : ";expires="+exdate.toGMTString())
+			}
+		
+	<?php } ?>
+
+	if(document.cookie.indexOf("eucookie") ===-1 ){
+		$("#eucookielaw").show();
+		$(".cd-top").css({
+			"bottom": "48px"
+		});
+
+		$("#marginBot").css({	
+			"margin-bottom": "60px"
+		});
+	}
+
+	$("#removecookie").click(function () {
+		SetCookie('eucookie','eucookie',365*10)
+		$("#eucookielaw").remove();
+		$(".cd-top").css({
+			"bottom": "20px"
+		});
+
+		$("#marginBot").css({
+			"margin-bottom": "20px"
+		});
+	});
+	// COOKIE
+
+
+	$(document).ready(function()
+	{	
+	
+	var counter = 0;
+
+
+	$(".toggle").click(function()
+	{
+		if (counter == 1) {
+			$("#contentBanner").hide();
+			$("#contentText").show();
+			counter --; }
+		
+		else if (counter == 0) {
+			$("#contentText").hide();
+			$("#contentBanner").show();
+			counter ++; }
+		
+		
+	});
+
+		$("#notificationLink").click(function()
+		{
+			$("#notificationContainer").fadeToggle(300);
+			$("#notification_count").fadeOut("slow");
+			return false;
+		});
+
+		//Document Click hiding the popup 
+		$(document).click(function()
+		{
+			$("#notificationContainer").hide();
+		});
+
+		//Popup on click
+		$("#notificationContainer").click(function()
+		{
+			return false;
+		});
+
+	});
+</script>
+
+<script type="text/javascript">
+	
+	function triggerSearch(){
+		var inputSearch = $('#request').val();
+		$('#content').html("");
+		
+		if(inputSearch.trim() === ""){
+			$('#request').val("");
+			$.ajax({
+				url: 'index/initEvents',
+				type: 'get',
+				data: 'input='+inputSearch,
+				beforeSend: function(){
+					$('#content').html("<div id=\"loader\"><img id=\"loadingMore\" src=\"/img/ajax-loader.gif\"/></div>");
+				},
+				success: function(data) {
+					$('#content').html(data);
+					$(function () {$('[data-toggle="tooltip"]').tooltip()});
+				}
+			});
+		}else{
+			$.ajax({
+				url: 'index/searchEvents',
+				type: 'get',
+				data: 'input='+inputSearch,
+				beforeSend: function(){
+					$('#content').html("<div id=\"loader\"><img id=\"loadingMore\" src=\"/img/ajax-loader.gif\"/></div>");
+				},
+				success: function(data) {
+					$('#content').html(data);
+					$(function () {$('[data-toggle="tooltip"]').tooltip()});
+				}
+			});
+		}
+	}
+	
+	
+	function triggerSearchArtists(){
+		var inputSearch = $('#request').val();
+		$('#content').html("");
+		
+		if(inputSearch.trim() === ""){
+			$('#request').val("");
+			$.ajax({
+				url: 'index/initEvents',
+				type: 'get',
+				data: 'input='+inputSearch,
+				beforeSend: function(){
+					$('#content').html("<div id=\"loader\"><img id=\"loadingMore\" src=\"/img/ajax-loader.gif\"/></div>");
+				},
+				success: function(data) {
+					$('#content').html(data);
+					$(function () {$('[data-toggle="tooltip"]').tooltip()});
+				}
+			});
+		}else{
+			console.log('test :: ' + inputSearch)
+			$.ajax({
+				url: 'index/searchEventsArtist',
+				type: 'get',
+				data: 'input='+inputSearch,
+				beforeSend: function(){
+					$('#content').html("<div id=\"loader\"><img id=\"loadingMore\" src=\"/img/ajax-loader.gif\"/></div>");
+				},
+				success: function(data) {
+					console.log('suuces');
+					$('#content').html(data);
+					$(function () {$('[data-toggle="tooltip"]').tooltip()});
+				}
+			});
+		}
+	}
+	
+	
+	
+	function triggerSearchDate(){
+		var date = $('#request').val();
+		$('#content').html("");
+		
+		if(date.trim() === ""){
+			$('#request').val("");
+			$.ajax({
+				url: 'index/initEvents',
+				type: 'get',
+				
+				beforeSend: function(){
+					$('#content').html("<div id=\"loader\"><img id=\"loadingMore\" src=\"/img/ajax-loader.gif\"/></div>");
+				},
+				
+				success: function(data) {
+					$('#content').html(data);
+					$(function () {$('[data-toggle="tooltip"]').tooltip()});
+				}
+			});
+		}else{
+			$.ajax({
+				url: 'index/searchEventsDate',
+				type: 'get',
+				data: 'date='+date,
+				
+				beforeSend: function(){
+					$('#content').html("<div id=\"loader\"><img id=\"loadingMore\" src=\"/img/ajax-loader.gif\"/></div>");
+				},
+				success: function(data) {
+					$('#content').html(data);
+					$(function () {$('[data-toggle="tooltip"]').tooltip()});
+				}
+			});
+		}
+	}
+	
+	
+	$(function () {
+	  	$('[data-toggle="tooltip"]').tooltip();
+	})
+</script>
+
+
+
+	</body>
+</html>

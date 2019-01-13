@@ -1,0 +1,41 @@
+<div id="contentText" style="margin-top: 15px; ">
+<?php
+$date = "";
+$nbEvents = "";
+$idEvent = 0;
+
+if(count($this->foundEvents) > 0):
+foreach ($this->foundEvents as $event): ?>
+	
+		<?php if($date != $this->escape($event->getDate())): 
+		$date = $this->escape($event->getDate());
+		$idEvent = 1;
+	?>
+		<?php echo $this->partial("index/displayEventTxt.phtml", array('event'=>$event, 'date'=>$date, 'idEvent'=>$idEvent, 'displayDate' => true, 'nbEventsByDate' => $this->nbEventsByDate, 'displayNumByDate' => false)) ?>
+	
+	<?php 
+		else: $idEvent++;
+		echo $this->partial("index/displayEventTxt.phtml", array('event'=>$event, 'date'=>$date, 'idEvent'=>$idEvent, 'displayDate' => false, 'nbEventsByDate' => $this->nbEventsByDate, 'displayNumByDate' => false));
+		endif;
+	?>
+
+<?php endforeach; ?>
+
+</div>
+<div id="contentBanner" style="margin-top: 15px;display:none;   ">
+<?php
+//*****************
+//EVENTS AVEC IMG
+//*****************
+
+foreach ($this->foundEvents as $event): ?>
+	
+	<?php echo $this->partial("index/displayEventImg.phtml", array('event'=>$event)); ?>
+		
+<?php endforeach; ?>
+</div>
+
+
+<? else: ?>
+	<div class="itemtest tete">Pas de résultats</div>
+<? endif; ?>

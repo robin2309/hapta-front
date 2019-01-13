@@ -1,0 +1,141 @@
+<?php require('displayFunctions.php') ?>
+
+			<p class="slogan">Trouve le caisson qui te correspond !</p>
+	
+			</div>
+			
+			<input type="checkbox" checked data-toggle="toggle" data-onstyle="default" data-on="<i class='fa fa-calendar-o'></i> En Cours <?php if($this->countCurrentConcours) echo '('.$this->countCurrentConcours.')' ?>" data-off="<i class='fa fa-calendar-o'></i> A Venir <?php if($this->countUpcomingConcours) echo '('.$this->countUpcomingConcours.')' ?>" data-offstyle="default" data-style="android" data-width="200" data-height="50" >
+			
+		</div>
+	</div>
+	
+	<!-- /page -->
+
+	<div class="contenu" id="content">
+
+	<div id="fb-root"></div>
+
+	<div id="contentText" class="contentConcours" style="margin-top: 15px;  padding-left: 10%;padding-right: 10%;">
+
+<?php if($this->countCurrentConcours): ?>
+<?php foreach ($this->currentConcours as $concours): 
+	$event = $concours->getEvent();
+	$dateDebComplete = strtotime($this->escape($concours->getDateDeb()));
+	$dateFinComplete = strtotime($this->escape($concours->getDateFin()));
+	/*$data['dateDeb'] = date('Y-m-d', $dateDebComplete);
+	$data['heureDeb'] = date('H:i', $dateDebComplete);
+	$data['dateFin'] = date('Y-m-d', $dateFinComplete);
+	$data['heureFin'] = date('H:i', $dateFinComplete);*/
+?>
+	<div>
+		<div class="row itemtitle concoursHead"> 
+			<p class='p0'>  <i class="fa fa-trophy calendaricon"></i> <?php echo $this->escape($concours->getNbGagnants()); ?>x<?php echo $this->escape($concours->getNbPlaces()); ?> Places à Gagner</span>
+			</p>
+		</div>
+			<a href="<?php echo $this->escape($event->getLinkFb()); ?>" target="blank"><img src="<?php echo $this->escape($event->getImg()) ?>" class="width100" name="imgEvent"/></a>
+			<div class="row itemtest tete concoursHead"  >
+			<p class='p0' ><b><i class="fa fa-play"></i> <?php echo dateToFrench($this->escape($event->getDate())); ?></b> - <b><?php echo $this->escape($event->getName()); ?></b> - <b><?php echo $this->escape($event->getSpot()->getName()); ?></b> - <b><?php echo $this->escape($event->getSpot()->getCity()); ?></b></p>
+			<p class='p0'><i class='fa fa-music'></i>
+				<?php 
+					$array = array();
+					foreach ($event->getArtists() as $artist){
+						$element = "";
+						$element = $artist->getName();
+						if(trim($artist->getLabel()) != ""){
+							$element = $element.' ('.trim($artist->getLabel());
+							if(trim($artist->getCountry()) != ""){
+								$element = $element. ' - ' . trim($artist->getCountry()).')';
+							}
+						} elseif (trim($artist->getCountry()) != ""){
+							$element = $element. ' ('.trim($artist->getCountry()).')';
+						}
+						$array[] = $element;
+					}
+					echo implode(', ', $array);
+				?>
+				</p>
+			
+			<p class='p0' ><i class='fa fa-clock-o'></i> Lancement le <u><?php echo dateToFrench($this->escape($concours->getDateDeb())); ?></u> à <u><?php echo date('H:i', $dateDebComplete); ?></u></p>
+			<p class='p0' ><i class='fa fa-clock-o'></i> Tirage le <u><?php echo dateToFrench($this->escape($concours->getDateFin())) ?></u> à <u><?php echo date('H:i', $dateFinComplete); ?> </u></p>
+			<p class='p0'>
+			<?php foreach ($event->getGenres() as $genre): ?>
+				<span class="label label-default labelConcours"><?php echo $this->escape($genre); ?></span>
+			<?php endforeach; ?>
+			</p>
+			<div class='jeuxConcours'>
+					<a  onclick="trackOutboundLink('<?php echo addslashes($this->escape($event->getName())); ?> / Concours');" href="https://www.facebook.com/<?php echo Zend_Registry::get('Fb_Link') ?>/photos/<?php echo $concours->getIdPostConcours() ?>" target="blank"><i class="fa fa-star displayNoneOnMobile"></i> Gagnez vos places</a>
+			</div>
+		</div>
+	
+		<div class="clear15px"></div>
+		
+	</div>
+<?php endforeach; ?>
+<?php else: ?>
+	<div class="alert alert-info" style="width:100%;">
+  		Nous n'avons pas de concours en cours.
+	</div>
+<?php endif; ?>
+
+</div>
+
+
+	<div id="contentBanner" style="margin-top: 15px;display:none;">
+
+<?php if($this->countUpcomingConcours): ?>
+<?php  foreach ($this->upcomingConcours as $concours): 
+	$event = $concours->getEvent();
+	$dateDebComplete = strtotime($this->escape($concours->getDateDeb()));
+	$dateFinComplete = strtotime($this->escape($concours->getDateFin()));
+	/*$data['dateDeb'] = date('Y-m-d', $dateDebComplete);
+	$data['heureDeb'] = date('H:i', $dateDebComplete);
+	$data['dateFin'] = date('Y-m-d', $dateFinComplete);
+	$data['heureFin'] = date('H:i', $dateFinComplete);*/
+?>
+	<div>
+		<div class="row itemtitle concoursHead"> 
+			<p class='p0'> <i class="fa fa-trophy calendaricon"></i> <?php echo $this->escape($concours->getNbGagnants()); ?>x<?php echo $this->escape($concours->getNbPlaces()); ?> Places à Gagner</span>
+			</p>
+		</div>
+		<a href="<?php echo $this->escape($event->getLinkFb()); ?>" target="blank"><img src="<?php echo $this->escape($event->getImg()) ?>" class="width100" name="imgEvent"/></a>
+		<div class="row itemtest tete concoursHead"  >
+			<p class='p0' ><b><i class="fa fa-play"></i> <?php echo dateToFrench($this->escape($event->getDate())); ?></b> - <b><?php echo $this->escape($event->getName()); ?></b> - <b><?php echo $this->escape($event->getSpot()->getName()); ?></b> - <b><?php echo $this->escape($event->getSpot()->getCity()); ?></b></p>
+			<p class='p0'><i class='fa fa-music'></i>
+				<?php 
+					$array = array();
+					foreach ($event->getArtists() as $artist){
+						$element = "";
+						$element = $artist->getName();
+						if(trim($artist->getLabel()) != ""){
+							$element = $element.' ('.trim($artist->getLabel());
+							if(trim($artist->getCountry()) != ""){
+								$element = $element. ' - ' . trim($artist->getCountry()).')';
+							}
+						} elseif (trim($artist->getCountry()) != ""){
+							$element = $element. ' ('.trim($artist->getCountry()).')';
+						}
+						$array[] = $element;
+					}
+					echo implode(', ', $array);
+				?>
+			</p>
+			<p class='p0' ><i class='fa fa-clock-o'></i> Lancement le <u><?php echo dateToFrench($this->escape($concours->getDateDeb())); ?></u> à <u><?php echo date('H:i', $dateDebComplete); ?></u></p>
+			<p class='p0' ><i class='fa fa-clock-o'></i> Tirage le <u><?php echo dateToFrench($this->escape($concours->getDateFin())); ?></u> à <u><?php echo date('H:i', $dateFinComplete); ?> </u></p>
+			<p class='p0'>
+			<?php foreach ($event->getGenres() as $genre): ?>
+				<span class="label label-default labelConcours"><?php echo $this->escape($genre); ?></span>
+			<?php endforeach; ?>
+			</p>
+		</div>
+		<div class="clear15px"></div>
+	</div>
+<?php endforeach; ?>
+<?php else: ?>
+	<div class="alert alert-info" style="width:100%;">
+  		Nous n'avons pas de concours à venir.
+	</div>
+<?php endif; ?>
+
+</div>
+
+</div>

@@ -1,0 +1,174 @@
+<?php require_once(realpath(dirname(__FILE__)."/displayFunctions.php")); ?>
+
+<?php if($this->displayDate): ?>
+	<div class="row itemtitle">
+		<p class='p0'> <i class="fa fa-calendar-o calendaricon"></i> <?php echo dateToFrench($this->date) ?> 
+			<span class="displayNoneOnMobile">
+			<?php if($this->displayNumByDate): ?>
+				- <?php echo getNbEventsForDate($this->date, $this->nbEventsByDate) ?> soirée(s)
+			<?php endif; ?>
+			</span>
+		</p>
+	</div>
+<?php endif; ?>
+
+<div class="row itemtest tete"  id="<?php echo $this->date ?>" >
+	<div class="col-md-2"><div class="vote">
+		<div id="participe<? $idFb = explode("/",$this->escape($this->event->getLinkFb()))[4]; echo $idFb; ?>" >
+			<div class="aligncenter voteinfos">
+				<a class="lienvote likebutton like<?php echo $this->escape($this->event->getId()); ?>" name="<?php echo $this->escape($this->event->getId()); ?>" onclick="rsvp(<?php echo $idFb; ?>)">Participer</i>
+				</a>
+			</div>
+		</div>
+		
+		<?php if($this->escape($this->event->getAttending()) == 0): ?>
+			<div class="aligncenter <?php echo $this->escape($this->event->getId()); ?>">-</div>
+		<?php else: ?>
+			<div class="aligncenter <?php echo $this->escape($this->event->getId()); ?>">
+			<p class='p0 nombreAttending'><?php echo $this->escape($this->event->getAttending()); ?></p></div>
+		<?php endif; ?>
+		
+		<div class="aligncenter">Participants</div></p>		
+	</div>
+</div>
+
+<div class="col-md-10">
+	<!-- MEDAILLONS -->
+	<?php
+		if(getNbEventsForDate($this->date, $this->nbEventsByDate) >= 4):
+			if($this->idEvent == 1): ?>
+				<div class="medaille"><img class="badge" src="/img/hapta_or_1.svg" height="57" width="70" alt="Hapta d'Or"></div>
+		<?php elseif($this->idEvent == 2): ?>
+				<div class="medaille"><img class="badge" src="/img/hapta_argent_1.svg" height="57" width="70" alt="Hapta d'Argent"></div>
+		<?php elseif($this->idEvent == 3): ?>
+			 	<div class="medaille"><img class="badge" src="/img/hapta_bronze_1.svg" height="57" width="70" alt="Hapta de Bronze"></div>
+<?php
+			endif;
+		endif;
+	?>
+	
+	<!-- SPOT -->
+	<p class='p0'>
+		<i class='fa fa-map-marker'></i>
+			<span class="spot media-tooltip" data-toggle="tooltip" data-placement="right" title="<?PHP echo $this->escape($this->event->getSpot()->getAddress()).', '.$this->escape($this->event->getSpot()->getCity());?>"><strong><?php echo $this->escape($this->event->getSpot()->getName());?></strong></span>
+		<i class="fa fa-chevron-right hoverchevron" data-toggle="tooltip" data-placement="right" title="<?PHP echo $this->escape($this->event->getSpot()->getAddress()).', '.$this->escape($this->event->getSpot()->getCity());?>"></i>
+	</p>
+	
+	<!-- LIEN FACEBOOK -->
+	<p class='p0' > <a class='linkblue' onclick="trackOutboundLink('<?php echo addslashes($this->escape($this->event->getName())); ?>');" rel="nofollow" target=\"_blank\" href="<?php echo $this->escape($this->event->getLinkFb()); ?>" title='Lien Facebook'><i class='fa fa-facebook-square'></i> <?php echo $this->escape($this->event->getName()); ?></a></p>
+	
+	<script type="text/javascript">
+		trackViewEvent('<?php echo addslashes($this->escape($this->event->getName())); ?>');
+	</script>
+	
+	<!-- ARTISTES -->
+	<p class='p0 maxWidht85'  ><i class='fa fa-music'></i>
+		<?php 
+			$array = array();
+			foreach ($this->event->getArtists() as $artist){
+				$element = "";
+				$element = $artist->getName();
+				if(trim($artist->getLabel()) != ""){
+					$element = $element.' ('.trim($artist->getLabel());
+					if(trim($artist->getCountry()) != ""){
+						$element = $element. ' - ' . trim($artist->getCountry()).')';
+					} else {
+						$element = $element.')';
+					}
+				} elseif (trim($artist->getCountry()) != ""){
+					$element = $element. ' ('.trim($artist->getCountry()).')';
+				}
+				$array[] = $element;
+			}
+			echo implode(', ', $array);
+		?>
+	</p>
+	
+	<!-- TIMES -->
+	<?php
+		$heure_debut = explode(":", $this->escape($this->event->getHeureDebut()));
+		$heure_fin = explode(":", $this->escape($this->event->getHeureFin()));
+		if(!($heure_debut[0] == 'NULL' || $heure_debut[0] == '')):
+			if($heure_fin[0] == 'NULL' || $heure_fin[0] == ''):
+				if($heure_debut[0] >= '08' && $heure_fin[0] <= '19' && $heure_debut[0] <= '19' && $heure_fin[0] >= '08'): ?>
+					<p class='p0'>
+						<i class='fa fa-sun-o'></i> Day - 
+						<i class='fa fa-clock-o'></i>
+						<?php echo $this->escape($this->event->getHeureDebut()); ?>
+					</p>
+				<?php elseif($heure_debut[0] >= '08' && $heure_fin[0] >= '19'): ?>
+					<p class='p0'>
+						<i class='fa fa-sun-o'></i> Day & <i class='fa fa-moon-o'></i> Night
+- 						<i class='fa fa-clock-o'></i>
+						<?php echo $this->escape($this->event->getHeureDebut()); ?>
+					</p>
+				<?php else: ?>
+					<p class='p0'>
+					<i class='fa fa-moon-o'></i> Night - 
+					<i class='fa fa-clock-o'></i>
+							<?php echo $this->escape($this->event->getHeureDebut()); ?>
+					</p>
+				<?php endif; ?>
+			<?php else: ?>
+				<?php if($heure_debut[0] >= '08' && $heure_fin[0] <= '19' && $heure_debut[0] <= '19' && $heure_fin[0] >= '08'): ?>
+					<p class='p0'>
+						<i class='fa fa-sun-o'></i> Day - 
+						<i class='fa fa-clock-o'></i>
+						<?php echo $this->escape($this->event->getHeureDebut())."/".$this->escape($this->event->getHeureFin()); ?>	
+					</p>
+				<?php elseif($heure_debut[0] >= '08' && $heure_fin[0] >= '19'): ?>
+					<p class='p0'>
+						<i class='fa fa-sun-o'></i> Day & <i class='fa fa-moon-o'></i> Night - 
+						<i class='fa fa-clock-o'></i>
+						<?php echo $this->escape($this->event->getHeureDebut())."/".$this->escape($this->event->getHeureFin()); ?>	
+					</p>
+				<?php else: ?>
+					<p class='p0'>
+					<i class='fa fa-moon-o'></i> Night - 
+					<i class='fa fa-clock-o'></i>
+					<?php echo $this->escape($this->event->getHeureDebut())."/".$this->escape($this->event->getHeureFin()); ?>
+					</p>
+				<?php endif; ?>
+			<?php endif; ?>
+	<?php endif; ?>
+	
+	<a href="<?php echo $this->url(array('controller'=>'events','action'=>'detail','id'=>$this->event->getId()),null, true); ?>" alt="Voir plus"><i class="fa fa-plus"></i> Voir plus</a>
+	
+	<!-- PRICES -->
+	<p class='p0 paddingTop5'>
+		<?php 
+		$i = 0;
+		foreach($this->event->getPrices() as $price): 
+		?>
+		<span class='label label-primary pricelabel'>
+			<?php if($price->getLink() != "" || $price->getLink() != NULL): ?>
+				<a class="linkwhite uBold" onclick="trackOutboundLink('<?php echo addslashes($this->escape($this->event->getName())); ?> / Ticket');" rel="nofollow" href="<?php echo $price->getLink() ?>" target="_blank"><?php echo $price->getType()->getName(); ?></a>
+			<?php else: ?>
+				<span class="uBold"> <?php echo $price->getType()->getName(); ?></span>
+			<?php endif; ?>
+			-
+			<?php echo $price->getPrice(); ?> € 
+		</span></h5>
+		<?php endforeach; ?>
+	</p>
+	
+	<!-- GENRES -->
+	<p class='p0'>
+		<?php foreach ($this->event->getGenres() as $genre): ?>
+			<span class="label label-default"><strong><?php echo $this->escape($genre); ?></strong></span>
+		<?php endforeach; ?>
+	</p>
+
+	<!-- JEUX CONCOURS -->
+	<?php 
+		$idPostConcours = $this->event->getConcours()->getIdPostConcours();
+		if(!(is_null($idPostConcours) || trim($idPostConcours) == '' || trim($idPostConcours) == 0)): 
+	?>
+		<div class='jeuxConcours'>
+			<a  onclick="trackOutboundLink('<?php echo addslashes($this->escape($this->event->getName())); ?> / Concours');" href="https://www.facebook.com/<?php echo Zend_Registry::get('Fb_Link') ?>/photos/<?php echo $idPostConcours ?>" target="blank"><i class='fa fa-trophy displayNoneOnMobile'></i> Jeu Concours</a>
+		</div>
+	<?php endif; ?>
+</div>
+		
+</div>
+	

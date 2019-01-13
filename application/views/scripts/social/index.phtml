@@ -1,0 +1,73 @@
+		<h1 class="slogan">Rejoins la Communauté Hapta !</h1>
+		</div>
+	</div>
+</div>
+
+<div class="contenu" id="content">
+  <script>
+    $(document).ready(function() {
+      $('#moreInsta').click(function() {
+        var tag   = $(this).data('tag'),
+            maxid = $(this).data('maxid');
+        $.ajax({
+          type: 'GET',
+          url: 'social/loadMorePictureInstagram',
+          data: {
+            tag: tag,
+            max_id: maxid
+          },
+          dataType: 'json',
+          success: function(data) {
+            // Output data
+            console.log('data: '+data);
+            $.each(data.images, function(i, src) {
+              var test = src.split(",");
+              $('ul#photosInsta').append('<li><img src="'+ test[0] +'" style="width:30px; border-radius: 150px; -webkit-border-radius: 150px; -moz-border-radius: 150px; margin-top: 5px; margin-left: 5px;"><span style="margin-left: 10px; margin-top:-10px;"><a href="https://instagram.com/'+ test[1] +'/" target="_blank">'+ test[1] +'</a></span><br/><a href="' + test[2] + '" target="_blank"><img src="' + test[3] + '" style="width:200px; margin-top: 10px;"></a></li>');
+            });
+
+            // Store new maxid
+            $('#moreInsta').data('maxid', data.next_id);
+	        }
+        });
+      });
+    });
+  </script>
+</head>
+<body>
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/fr_FR/sdk.js#xfbml=1&version=v2.4&appId="+<?php echo Zend_Registry::get('Fb_Id_App') ?>;
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+<div class="socialFbTwitter">
+	<div class="leftFacebook">
+		<h1 style="font-size: 25px; color: #4e67a9; margin-bottom: 10px;">Sur Facebook #<?php echo Zend_Registry::get('Fb_Link') ?></h1>
+		<div class="fb-page" data-href="https://www.facebook.com/<?php echo Zend_Registry::get('Fb_Link') ?>" data-width="430" data-height="300" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true" data-show-posts="true"><div class="fb-xfbml-parse-ignore"><blockquote cite="https://www.facebook.com/<?php echo Zend_Registry::get('Fb_Link') ?>"><a href="https://www.facebook.com/<?php echo Zend_Registry::get('Fb_Link') ?>"><?php echo Zend_Registry::get('Fb_Name') ?></a></blockquote></div></div>
+	</div>
+
+	<div class="rightTwitter">
+		<h1 style="font-size: 25px; color: #4e67a9; margin-bottom: 10px;">Sur Twitter #Hapta #<?php echo Zend_Registry::get('Fb_Link') ?></h1>
+		<a class="twitter-timeline" href="https://twitter.com/<?php echo Zend_Registry::get('Fb_Link') ?>" data-widget-id="<?php echo Zend_Registry::get('Id_Twitter') ?>">Tweets de @<?php echo Zend_Registry::get('Fb_Link') ?></a> <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+	</div>
+</div>
+
+<h1 style="font-size: 25px; color: #4e67a9; margin-bottom: 10px; margin-top: 30px;">Sur Instagram #Hapta #<?php echo Zend_Registry::get('Fb_Link') ?></h1>
+<ul id="photosInsta">
+    <?php foreach ($this->media->data as $data): ?>
+    	<li>
+        	<img src="<?php echo $data->user->profile_picture ?>" style="width:30px; border-radius: 150px; -webkit-border-radius: 150px; -moz-border-radius: 150px; margin-top: 5px; margin-left: 5px;"><span style="margin-left: 10px; margin-top:-10px;"><a href="https://instagram.com/<?php echo $data->user->username ?>/" target="_blank"><?php echo $data->user->username ?></a></span><br/>
+        	<a href="<?php echo $data->link ?>" target="_blank"><img src="<?php echo $data->images->standard_resolution->url ?>" style="width:200px; margin-top: 10px;"></a>
+        	<!-- <div style="width:200px;overflow: hidden;">'.$data->caption->text.</div> -->
+        </li>
+    <?php endforeach; ?>
+    </ul>
+    </div>
+
+    <div><button id="moreInsta" data-maxid="<?php echo $this->media->pagination->next_max_id ?>" data-tag="<?php echo $this->tag ?>">LOAD MORE</button>
+</div>
+

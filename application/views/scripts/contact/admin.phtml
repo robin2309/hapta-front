@@ -1,0 +1,55 @@
+			<p class="slogan">Inscription à l'accès promoteurs</p>
+		</div>
+	</div>
+</div>
+
+<div class="contenu responsive" id="content">
+	<div class="contact" style="padding-top:30px;">
+		<?php if($this->success > 0): ?>
+			<div class="alert alert-success" style="width: 80%; display: inline-block;">
+			  Demande d'inscription envoyé avec succès !<br/> Nous traiterons votre demande dans les plus brefs délais.
+			</div>
+		<?php elseif($this->success < 0): ?>
+			<div class="alert alert-danger" style="width: 80%; display: inline-block;">
+			  Problème lors de l'envoi du mail. Veuillez nous contacter sur contact@haptalyon.fr
+			</div>
+		<?php endif; ?>
+		<form id="formContact" enctype="application/x-www-form-urlencoded" method="post" action="<?php echo $this->url(array('controller'=>'contact','action'=>'admin'),null, true) ?>" onsubmit="return verifContact(this)" class="form-horizontal">
+
+	  		<input type="text" class="name_contact" id="name_contact" name="name_contact" placeholder="Nom" required pattern="^[a-zA-Z àèìòùÀÈÌÒÙáéíóúýÁÉÍÓÚÝâêîôûÂÊÎÔÛãñõÃÑÕäëïöüÿÄËÏÖÜŸçÇßØøÅåÆæœ]*$" onblur="upperCaseNomContact(this.value)" />
+	  			<span class="form_hint contact">Certains charactères spéciaux ne sont pas acceptés.</span>
+		<!--			
+			<input type="text" class="firstname_contact" id="firstname_contact" name="firstname_contact" placeholder="Prénom" required pattern="^[a-zA-Z àèìòùÀÈÌÒÙáéíóúýÁÉÍÓÚÝâêîôûÂÊÎÔÛãñõÃÑÕäëïöüÿÄËÏÖÜŸçÇßØøÅåÆæœ]*$" onblur="upperCaseNomContact(this.value)" />
+	  			<span class="form_hint contact">Certains charactères spéciaux ne sont pas acceptés.</span>
+
+			<input type="text" class="promoteur_contact" id="promoteur_contact" name="promoteur_contact" placeholder="Organisation" required pattern="^[a-zA-Z àèìòùÀÈÌÒÙáéíóúýÁÉÍÓÚÝâêîôûÂÊÎÔÛãñõÃÑÕäëïöüÿÄËÏÖÜŸçÇßØøÅåÆæœ]*$" onblur="upperCaseNomContact(this.value)" />
+	  			<span class="form_hint contact">Certains charactères spéciaux ne sont pas acceptés.</span>
+		
+		<div class="checkbox">
+  <label>
+    <input type="radio" value="club">
+    Club
+  </label>
+  <label>
+    <input type="radio" value="label">
+    Label
+  </label>
+   <label>
+    <input type="radio" value="orgisateur">
+    Orgisateur
+  </label>
+</div>
+		!-->
+	  		<input type="text" class="mail_contact" id="mail_contact" name="mail_contact" placeholder="Mail" required pattern="[a-z0-9]+([_|\.|-]{1}[a-z0-9]+)*@[a-z0-9]+([_|\.|-]{1}[a-z0-9]+)*[\.]{1}[a-z]{2,6}$" />
+	  			<span class="form_hint contact">Certains charactères spéciaux ne sont pas acceptés.</span>
+
+<textarea type="textarea" class="message_contact" id="message_contact" name="message_contact" placeholder="Merci de nous fournir les liens de vos events pour que nous puissions vous les réatribuer.
+Exemple : 
+https://www.facebook.com/events/541855439307/ 
+https://www.facebook.com/events/541855439309567/ " required pattern="^[a-zA-Z0-9 àèìòùÀÈÌÒÙáéíóúýÁÉÍÓÚÝâêîôûÂÊÎÔÛãñõÃÑÕäëïöüÿÄËÏÖÜŸçÇßØøÅåÆæœ]*$" onblur="upperCaseTextAreaContact(this.value)"></textarea>
+				<span class="form_hint contactArea">Certains charactères spéciaux ne sont pas acceptés.</span>
+
+			<button type="submit" id="submitbutton" class="btn btn-lg btn-primary" style="margin-bottom:30px; width:20%!important;">Envoyer <i class='fa fa-paper-plane'></i></button>
+		</form>
+	</div>
+</div>

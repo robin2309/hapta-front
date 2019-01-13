@@ -1,0 +1,25 @@
+AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript application/javascript
+
+RewriteEngine On
+RewriteBase /
+RewriteCond %{REQUEST_FILENAME} -s [OR]
+RewriteCond %{REQUEST_FILENAME} -l [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^.*$ - [NC,L]
+RewriteRule ^.*$ index.php [NC,L]
+
+RewriteCond %{HTTP_HOST} !^www\.haptalyon\.fr
+RewriteRule (.*) http://www.haptalyon.fr/$1 [R=301,L]
+
+ExpiresActive On
+ExpiresDefault A0
+Header append Cache-Control "private, must-revalidate"
+ExpiresByType image/gif A604800
+ExpiresByType image/png A604800
+ExpiresByType image/jpeg A604800
+# ExpiresByType application/x-javascript A604800
+# ExpiresByType text/css A604800
+ExpiresByType text/plain A604800
+
+
+

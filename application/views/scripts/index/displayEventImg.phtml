@@ -1,0 +1,18 @@
+<?php 
+$img = $this->event->getImg();
+if(isset($img) && !(strlen(trim($img))==0)):
+?>
+	<div class="itembanner tete" id="<?php echo $this->escape($this->event->getDate()) ?>" >
+		<a rel="nofollow" onclick="trackOutboundLink('<?php echo addslashes($this->escape($this->event->getName())); ?> / Flyer');" href="<?php echo $this->escape($this->event->getLinkFb()); ?>" target="blank"><img src="<?php echo $this->escape($this->event->getImg()) ?>" class="width100" name="imgEvent" alt="Hapta - <?php echo $this->escape($this->event->getName()); ?>"/></a>
+		 <figcaption>
+	        <p>
+	        <?php 
+	            $dateEvent = strtotime($this->escape($this->event->getDate()));
+	            $day = date('d', $dateEvent);
+	            $month = date('m', $dateEvent);			
+	            echo $day.'/'.$month;
+	        ?> 
+	        - <?php echo $this->escape($this->event->getName()); ?>  <a rel="nofollow" onclick="trackOutboundLink('<?php echo addslashes($this->escape($this->event->getName())); ?> / Flyer');" href="<?php echo $this->escape($this->event->getLinkFb()); ?>" target="blank">Lien Facebook</a></p>
+	    </figcaption>
+	</div>
+<?php endif; ?>

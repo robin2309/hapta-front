@@ -1,0 +1,77 @@
+			<p class="slogan">Contactez nous !</p>
+		</div>
+	</div>
+</div>
+
+<div class="contenu responsive" id="content">
+	<div class="contact" style="padding-top:30px;">
+		<?php if($this->success > 0): ?>
+			<div class="alert alert-success" style="width: 80%; display: inline-block;">
+			  Mail envoyé avec succès !
+			</div>
+		<?php elseif($this->success < 0): ?>
+			<div class="alert alert-danger" style="width: 80%; display: inline-block;">
+			  Problème lors de l'envoi du mail.
+			</div>
+		<?php endif; ?>
+		<form id="formContact" enctype="application/x-www-form-urlencoded" method="post" action="/contact" onsubmit="return verifContact(this)" class="form-horizontal">
+
+	  		<input type="text" class="name_contact" id="name_contact" name="name_contact" placeholder="Nom - Prénom" required pattern="^[a-zA-Z àèìòùÀÈÌÒÙáéíóúýÁÉÍÓÚÝâêîôûÂÊÎÔÛãñõÃÑÕäëïöüÿÄËÏÖÜŸçÇßØøÅåÆæœ]*$" onblur="upperCaseNomContact(this.value)" />
+	  			<span class="form_hint contact">Certains charactères spéciaux ne sont pas acceptés.</span>
+
+	  		<input type="text" class="mail_contact" id="mail_contact" name="mail_contact" placeholder="Mail" required pattern="[a-z0-9]+([_|\.|-]{1}[a-z0-9]+)*@[a-z0-9]+([_|\.|-]{1}[a-z0-9]+)*[\.]{1}[a-z]{2,6}$" />
+	  			<span class="form_hint contact">Certains charactères spéciaux ne sont pas acceptés.</span>
+
+			<select class="motif_contact" id="motif_contact" name="motif_contact" onclick="change(this.value)">
+				<option value="Demande d'information" selected>Demande d'information</option>
+				<option value="Demande de partenariat">Demande de partenariat</option>
+				<option value="Problèmes techniques">Problèmes techniques</option>
+				<option value="Suggestions">Suggestions</option>
+				<option value="Autre">Autre</option>
+			</select>
+			<select class="techniques_contact" id="techniques_contact" name="techniques_contact">
+				<option value="J'ai trouvé une erreur sur un event">J'ai trouvé une erreur sur un event</option>
+				<option value="Je n'arrive pas à me connecter">Je n'arrive pas à me connecter</option>
+				<option value="Autre">Autre</option>
+			</select>
+			<select class="paternariat_contact" id="paternariat_contact" name="paternariat_contact">
+				<option value="Je souhaite devenir partenaire de HaptaLyon">Je souhaite devenir partenaire de HaptaLyon</option>
+				<option value="J'aimerais que mon event figure sur Hapta Lyon">J'aimerais que mon event figure sur Hapta Lyon</option>
+				<option value="Autre">Autre</option>
+			</select>
+
+			<textarea type="textarea" class="message_contact" id="message_contact" name="message_contact" placeholder="Message" required pattern="^[a-zA-Z0-9 àèìòùÀÈÌÒÙáéíóúýÁÉÍÓÚÝâêîôûÂÊÎÔÛãñõÃÑÕäëïöüÿÄËÏÖÜŸçÇßØøÅåÆæœ]*$" onblur="upperCaseTextAreaContact(this.value)"></textarea>
+				<span class="form_hint contactArea">Certains charactères spéciaux ne sont pas acceptés.</span>
+
+			<button type="submit" id="submitbutton" class="btn btn-lg btn-primary">Envoyer <i class='fa fa-paper-plane'></i></button>
+		</form>
+	</div>
+</div>
+
+<script type="text/javascript">
+	$(".techniques_contact").hide();
+	$(".paternariat_contact").hide();
+
+	function change(value) {
+		if(value == 'Problèmes techniques') {
+			$(".paternariat_contact").hide();
+			$(".techniques_contact").show();
+		}
+		if(value == 'Demande de partenariat') {
+			$(".techniques_contact").hide();
+			$(".paternariat_contact").show();
+		}
+		if(value == 'Demande d\'information') {
+			$(".techniques_contact").hide();
+			$(".paternariat_contact").hide();
+		}
+		if(value == 'Autre') {
+			$(".techniques_contact").hide();
+			$(".paternariat_contact").hide();
+		}
+		if(value == 'Suggestions') {
+			$(".techniques_contact").hide();
+			$(".paternariat_contact").hide();
+		}
+	}
+</script>
